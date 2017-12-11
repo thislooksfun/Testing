@@ -5,7 +5,7 @@ set -e
 echo "Running tests!"
 
 if [ $TRAVIS_EVENT_TYPE == "push" ]; then
-  DATA="{\"title\":\"It's working!\",\"head\":\"$TRAVIS_BRANCH\",\"base\":\"master\"}"
+  DATA="{\"title\":\"It's working!\",\"head\":\"thislooksfun:$TRAVIS_BRANCH\",\"base\":\"master\"}"
   URL="https://api.github.com/repos/$TRAVIS_REPO_SLUG/pulls"
   
   echo "Creating PR with data:"
