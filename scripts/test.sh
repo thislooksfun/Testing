@@ -12,8 +12,6 @@ if [ $TRAVIS_EVENT_TYPE == "push" ]; then
   echo "> $DATA"
   echo "> $URL"
   
-  curl -u "$BOT_NAME:$BOT_PWD" -H "Content-Type: application/json" "https://api.github.com/user"
-  curl -u "$BOT_NAME:$BOT_PWD" -H "Content-Type: application/json" "$URL"
   curl -u "$BOT_NAME:$BOT_PWD" -H "Content-Type: application/json" -X POST -d "$DATA" "$URL"
 else
   echo "Build is not a push -- skipping!"
