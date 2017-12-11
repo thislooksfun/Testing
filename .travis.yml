@@ -3,7 +3,7 @@ sudo: required
 language: c
 
 install:
-  - chmod+x scripts/setup.sh
+  - chmod +x scripts/setup.sh
   - scripts/setup.sh
 
 script:
