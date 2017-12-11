@@ -1,8 +1,11 @@
-sudo: required
+language: c
 
-language: node_js
-node_js:
-  - "stable"
+install:
+  - chmod +x scripts/setup.sh
+  - scripts/setup.sh
+
+script:
+  - scripts/test.sh
 
 notifications:
   email: false
