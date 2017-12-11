@@ -12,7 +12,7 @@ if [ $TRAVIS_PULL_REQUEST == false ]; then
   echo "> $DATA"
   echo "> $URL"
   
-  curl -H "Content-Type: application/json" -X POST -d "$DATA" "$URL"
+  curl -u "$BOT_NAME:$BOT_PWD" -H "Content-Type: application/json" -X POST -d "$DATA" "$URL"
 else
   echo "Build is a pull request (#$TRAVIS_PULL_REQUEST) -- skipping!"
 fi
