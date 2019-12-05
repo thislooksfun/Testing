@@ -23,7 +23,10 @@ jobs:
 
       - name: Remap Output
         id: changed
-        run: ./scripts/remap_output "$INPUT"
+        run: |
+          curl -sSL https://gist.githubusercontent.com/thislooksfun/90fdb0cb616249085d307221c9d5966c/raw/ae7b5dbbd17150cbca019c581f4b6b0f9be6d538/remap_output > ./remap_output
+          chmod +x remap_output
+          ./remap_output "$INPUT"
         env:
           INPUT: ${{ steps.changed-raw.outputs.result }}
 
