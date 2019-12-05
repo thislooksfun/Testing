@@ -12,7 +12,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(JSON.stringify(context));
+            const {sha: commit_sha, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
+            console.log(JSON.stringify({owner, repo, commit_sha }));
       # return github.git.getCommit({...github.})
       - name: "Confirm"
         run: "echo '${{ steps.collect-changed.outputs.result }}'"
