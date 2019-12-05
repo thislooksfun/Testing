@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+
+const DEFAULT_KEY = "out";
+
+function setOutput(name, val) {
+  console.log(`::set-output name=${name}::${val}`);
+}
+
+function parseAndOutput(data) {
+  try {
+    flattenAndOutput("", JSON.parse(data));
+  } catch (e) {
+    console.log(e);
+    // Something went wrong, just return the input
+    return setOutput(DEFAULT_KEY, data);
+  }
+}
+
+function flattenAndOutput(keypath, data) {
+  if (data == null) return;
+
+  if (typeof data != "object") {
+    // Not an object or array, just return it
+    return setOutput(keypath || DEFAULT_KEY, data);
+  }
+
+  if (Array.isArray(data)) {
+    const root = keypath || DEFAULT_KEY;
+    flattenAndOutput(`${root}.len`, data.length);
+    for (let i = 0; i < data.length; i++) {
+      flattenAndOutput(`${root}[${i}]`, data[i]);
+    }
+    return;
+  }
+
+  for (const key in data) {
+    const kp = keypath ? `${keypath}.${key}` : key;
+    flattenAndOutput(kp, data[key]);
+  }
+}
+
+parseAndOutput(process.argv[2]);

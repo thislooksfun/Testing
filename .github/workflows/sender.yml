@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Collect Changed Files
-        id: changed
+        id: changed-raw
         uses: actions/github-script@0.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -16,8 +16,17 @@ jobs:
             const {data: {files}} = await github.repos.getCommit({owner, repo, ref });
             return { names: files.map(f => f.filename), files }
 
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - name: Remap Output
+        id: changed
+        run: ./scripts/remap_output '${{ steps.changed-raw.outputs.result }}'
+
       - name: "Conditional 1"
-        if: "contains(steps.changed.outputs.result.names, 'package.json')"
+        if: "contains(steps.changed.outputs.result, 'package.json')"
         run: echo "True!"
       #
       # - name: "Conditional 2"
