@@ -13,7 +13,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const {sha: ref, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
-            const commit = await github.repos.getCommit({owner, repo, commit_sha });
+            const commit = await github.repos.getCommit({owner, repo, ref });
             console.log(JSON.stringify(commit));
             return commit;
       - name: "Confirm"
