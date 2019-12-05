@@ -1,0 +1,20 @@
+name: Release Builder
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect Changed Files
+        run: COMMIT="\"Hello world\""
+      - name: "Confirm"
+        run: |
+          echo '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "commit": $COMMIT}'
+      # - name: Repository Dispatch
+      #   uses: peter-evans/repository-dispatch@v1
+      #   with:
+      #     token: ${{ secrets.REPO_ACCESS_TOKEN }}
+      #     repository: username/my-repo
+      #     event-type: my-event
+      #     client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "commit": $COMMIT}'
