@@ -9,8 +9,7 @@ jobs:
       - name: Collect Changed Files
         run: COMMIT="\"Hello world\""
       - name: "Confirm"
-        run: |
-          echo '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "commit": $COMMIT}'
+        run: 'echo "{\"ref\": \"${{ github.ref }}\", \"sha\": \"${{ github.sha }}\", \"commit\": $COMMIT}"'
       # - name: Repository Dispatch
       #   uses: peter-evans/repository-dispatch@v1
       #   with:
