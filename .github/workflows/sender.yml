@@ -12,7 +12,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const {sha, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
-            const pkg = await github.repos.getContents({repo, owner, path: 'package.json', ref: sha});
+            const pkg = await github.repos.getContents({repo, owner, path: 'package.json', ref: sha, headers: {"Accept": "application/vnd.github.v3.raw"}});
             console.log(pkg);
             // const version
             // const tag = `v${version}`
