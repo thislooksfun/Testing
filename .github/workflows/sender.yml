@@ -14,10 +14,12 @@ jobs:
           script: |
             const {sha: ref, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
             const commit = await github.repos.getCommit({owner, repo, ref });
-            console.log(JSON.stringify(commit));
-            return commit;
+            return commit.data.files.map(f => f.filename);
       - name: "Confirm"
         run: "echo '${{ steps.collect-changed.outputs.result }}'"
+      - name: "Conditional"
+        if: contains(steps.collect-changed.outputs.result, 'package.json')
+        run: echo "True!"
       # - name: Repository Dispatch
       #   uses: peter-evans/repository-dispatch@v1
       #   with:
