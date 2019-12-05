@@ -15,6 +15,7 @@ jobs:
             const {sha: ref, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
             const commit = await github.repos.getCommit({owner, repo, commit_sha });
             console.log(JSON.stringify(commit));
+            return commit;
       - name: "Confirm"
         run: "echo '${{ steps.collect-changed.outputs.result }}'"
       # - name: Repository Dispatch
