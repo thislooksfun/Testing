@@ -7,19 +7,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Collect Changed Files
-        id: collect-changed
+        id: changed
         uses: actions/github-script@0.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const {sha: ref, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
-            const commit = await github.repos.getCommit({owner, repo, ref });
-            return commit.data.files.map(f => f.filename);
-      - name: "Confirm"
-        run: "echo '${{ steps.collect-changed.outputs.result }}'"
-      - name: "Conditional"
-        if: contains(steps.collect-changed.outputs.result, 'package.json')
+            const {data: {files}} = await github.repos.getCommit({owner, repo, ref });
+            return { names: files.map(f => f.filename), files }
+
+      - name: "Conditional 1"
+        if: "contains(steps.changed.outputs.result.names, 'package.json')"
         run: echo "True!"
+
+      # - name: "Conditional 2"
+      #   if: "contains(steps.changed.outputs.result.names, 'package.json')
+      #     && contains(steps.changed.outputs.result.files['package.json']"
+      #   run: echo "True!"
+
+      - name: "Confirm"
+        run: "echo '${{ steps.changed.outputs.result }}'"
       # - name: Repository Dispatch
       #   uses: peter-evans/repository-dispatch@v1
       #   with:
