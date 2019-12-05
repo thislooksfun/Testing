@@ -16,14 +16,14 @@ jobs:
       - name: Thing (s)
         run: |
           echo '${{ steps.out.outputs.str }}'
-          echo '${{ contains(steps.out.outputs.str, "hell") }}'
+          echo '${{ contains(steps.out.outputs.str, 'hell') }}'
 
       - name: Thing (a)
         run: |
           echo '${{ steps.out.outputs.arr }}'
-          echo '${{ contains(steps.out.outputs.arr, "hell") }}'
+          echo '${{ contains(steps.out.outputs.arr, 'hell') }}'
 
       - name: Thing (o)
         run: |
           echo '${{ steps.out.outputs.obj }}'
-          echo '${{ contains(steps.out.outputs.obj, "hell") }}'
+          echo '${{ contains(steps.out.outputs.obj, 'hell') }}'
