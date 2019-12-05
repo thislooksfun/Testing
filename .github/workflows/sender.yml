@@ -7,9 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Collect Changed Files
-        run: export COMMIT="\"Hello world\""
+        id: collect-changed
+        uses: actions/github-script@0.3.0
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            console.log(JSON.stringify(context));
+            # return github.git.getCommit({...github.})
       - name: "Confirm"
-        run: 'echo "{\"ref\": \"${{ github.ref }}\", \"sha\": \"${{ github.sha }}\", \"commit\": $COMMIT}"'
+        run: "echo '${{ steps.collect-changed.outputs.result }}'"
       # - name: Repository Dispatch
       #   uses: peter-evans/repository-dispatch@v1
       #   with:
