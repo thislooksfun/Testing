@@ -19,14 +19,12 @@ jobs:
       - name: "Conditional 1"
         if: "contains(steps.changed.outputs.result.names, 'package.json')"
         run: echo "True!"
-
+      #
       # - name: "Conditional 2"
       #   if: "contains(steps.changed.outputs.result.names, 'package.json')
       #     && contains(steps.changed.outputs.result.files['package.json']"
       #   run: echo "True!"
-
-      - name: "Confirm"
-        run: "echo '${{ steps.changed.outputs.result }}'"
+      #
       # - name: Repository Dispatch
       #   uses: peter-evans/repository-dispatch@v1
       #   with:
