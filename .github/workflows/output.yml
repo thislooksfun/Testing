@@ -1,0 +1,23 @@
+name: Output Testing
+
+on: push
+
+jobs:
+  test-output:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Output
+        id: out
+        run: |
+          echo "::set-output name=str::hello"
+          echo "::set-output name=arr::[\"hello\"]"
+          echo "::set-output name=obj::{\"hello\": \"world\"}"
+
+      - name: Thing (s)
+        run: echo '${{ steps.out.outputs.str }}'
+
+      - name: Thing (a)
+        run: echo '${{ steps.out.outputs.arr }}'
+
+      - name: Thing (o)
+        run: echo '${{ steps.out.outputs.obj }}'
