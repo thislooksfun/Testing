@@ -1,6 +1,6 @@
 {
   "name": "testing",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "scripts": {
     "install": "chmod +x ./scripts/setup.sh && ./scripts/setup.sh || echo \"Setup script couldn't be made executable!\"",
