@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Collect Changed Files
-        run: COMMIT="\"Hello world\""
+        run: export COMMIT="\"Hello world\""
       - name: "Confirm"
         run: 'echo "{\"ref\": \"${{ github.ref }}\", \"sha\": \"${{ github.sha }}\", \"commit\": $COMMIT}"'
       # - name: Repository Dispatch
