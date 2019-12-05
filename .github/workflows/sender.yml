@@ -3,41 +3,33 @@ name: Release Builder
 on: push
 
 jobs:
-  build:
+  tag:
     runs-on: ubuntu-latest
     steps:
       - name: Collect Changed Files
-        id: changed-raw
+        id: changed
         uses: actions/github-script@0.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const {sha: ref, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
             const {data: {files}} = await github.repos.getCommit({owner, repo, ref });
-            return { names: files.map(f => f.filename), files }
-
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-
-      - name: Remap Output
-        id: changed
-        run: |
-          curl -sSL https://gist.githubusercontent.com/thislooksfun/90fdb0cb616249085d307221c9d5966c/raw/ae7b5dbbd17150cbca019c581f4b6b0f9be6d538/remap_output > ./remap_output
-          chmod +x remap_output
-          ./remap_output "$INPUT"
-        env:
-          INPUT: ${{ steps.changed-raw.outputs.result }}
-
-      - name: "Conditional 1"
-        if: "contains(steps.changed.outputs.result, 'package.json')"
-        run: echo "True!"
+            const pkg = files.filter(f.filename == "package.json")
+            if (!pkg) return false;
+            # const {patch} = pkg[0]
+            console.log(pkg[0])
       #
-      # - name: "Conditional 2"
-      #   if: "contains(steps.changed.outputs.result.names, 'package.json')
-      #     && contains(steps.changed.outputs.result.files['package.json']"
-      #   run: echo "True!"
+      # - name: Tag New Version
+      #   if: "steps.changed.outputs.result"
+      #   uses: actions/github-script@0.3.0
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       const {sha, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
+      #       const version
+      #       const tag = `v${version}`
+      #       github.git.createRef({owner, repo, sha, ref: `refs/tags/${tag}`})
+      #       await github.repos.
       #
       # - name: Repository Dispatch
       #   uses: peter-evans/repository-dispatch@v1
