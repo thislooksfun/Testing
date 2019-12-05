@@ -23,7 +23,9 @@ jobs:
 
       - name: Remap Output
         id: changed
-        run: ./scripts/remap_output '${{ steps.changed-raw.outputs.result }}'
+        run: ./scripts/remap_output "$INPUT"
+        env:
+          INPUT: ${{ steps.changed-raw.outputs.result }}
 
       - name: "Conditional 1"
         if: "contains(steps.changed.outputs.result, 'package.json')"
