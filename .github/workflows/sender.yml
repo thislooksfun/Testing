@@ -14,10 +14,10 @@ jobs:
             const {sha, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
             const pkg = await github.repos.getContents({repo, owner, path: 'package.json', ref: sha});
             console.log(pkg);
-            # const version
-            # const tag = `v${version}`
-            # github.git.createRef({owner, repo, sha, ref: `refs/tags/${tag}`})
-            # await github.repos.
+            // const version
+            // const tag = `v${version}`
+            // github.git.createRef({owner, repo, sha, ref: `refs/tags/${tag}`})
+            // await github.repos.
       #
       # - name: Repository Dispatch
       #   uses: peter-evans/repository-dispatch@v1
