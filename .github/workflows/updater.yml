@@ -20,4 +20,4 @@ jobs:
 #         uses: actions/checkout@v2.0.0
       - name: Commit
         run: |
-          echo "out: ${steps.get_zip.outputs.result}"
+          echo "out: ${{ steps.get_zip.outputs.result }}"
