@@ -8,17 +8,30 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2.0.0
-      - name: Update Zip Link
+      - name: Get Tag
+        id: get_tag
         uses: actions/github-script@0.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: return context.payload.release.tag_name;
+
+      - name: Checkout
+        uses: actions/checkout@v2.0.0
+      - name: Update Zip URL
+        uses: actions/github-script@0.3.0
+        id: update_zip
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
           script: |
-            const fs = require("fs");
-            fs.writeFileSync("zip.url", context.payload.release.zipball_url);
-      - name: Status
-        run: git status
-#       - name: Commit
-#         run: |
-#           echo "out: ${{ steps.get_zip.outputs.result }}"
+            let pkg = require("package.json");
+            pkg.custom_zip_url = context.payload.release.zipball_url;
+            require("fs").writeFileSync("package.json", JSON.stringify(pkg, null, 2));
+
+      - name: Commit and Push
+        uses: github-actions-x/commit@v2.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          files: package.json
+          commit-message: 'Update .zip URL to version ${{ steps.get_tag.outputs.result }}'
