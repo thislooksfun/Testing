@@ -9,9 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Find Zip File
+        id: get_zip
         uses: actions/github-script@0.3.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const {payload: {release: {zipball_url: zip}}} = context;
             console.log(zip);
+#       - name: Checkout
+#         uses: actions/checkout@v2.0.0
+      - name: Commit
+        run: |
+          echo "out: ${steps.get_zip.outputs.result}"
