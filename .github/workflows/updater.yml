@@ -25,10 +25,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
           script: |
-            console.log(__dirname);
-            let pkg = require("package.json");
+            console.log(require("process").cwd());
+            const fs = require("fs");
+            let pkgs = fs.readFileSync("package.json", {encoding: "utf8"});
+            let pkg = JSON.parse(pkgs);
             pkg.custom_zip_url = context.payload.release.zipball_url;
-            require("fs").writeFileSync("package.json", JSON.stringify(pkg, null, 2));
+            fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
 
       - name: Commit and Push
         uses: github-actions-x/commit@v2.3
