@@ -1,4 +1,4 @@
-name: Zip Finder
+name: Zip Link Updater
 
 on:
   release:
@@ -29,28 +29,13 @@ jobs:
           script: |
             console.log(require("process").cwd());
             const fs = require("fs");
-            let pkgs = fs.readFileSync("package.json", {encoding: "utf8"});
-            let pkg = JSON.parse(pkgs);
-            pkg.custom_zip_url = context.payload.release.zipball_url;
-            fs.writeFileSync("package.json", JSON.stringify(pkg, null, 2));
+            let pkg = JSON.parse(fs.readFileSync("repository.json", {encoding: "utf8"}));
+            pkg.packages[0].link = context.payload.release.zipball_url;
+            fs.writeFileSync("repository.json", JSON.stringify(pkg, null, 2));
 
-      - name: wtf.pt1
-        run: |
-          git status
-          git log
-
-      - name: Commit Changes
+      - name: Commit and Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -m "Update .zip URL to version ${{ steps.get_tag.outputs.result }}" package.json
-
-      - name: wtf.pt2
-        run: |
-          git status
-          git log
-
-      - name: Push Changes
-        uses: ad-m/github-push-action@v0.5.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          git commit -m "Update .zip URL to version ${{ steps.get_tag.outputs.result }}" repository.json
+          git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${REPOSITORY}.git"
