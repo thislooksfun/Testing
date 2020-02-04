@@ -1,0 +1,19 @@
+name: Zip Finder
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find Zip File
+        uses: actions/github-script@0.3.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            //const {sha, payload: {repository: {name: repo, owner: {name: owner}} }} = context;
+            //const pkg = await github.repos.getContents({repo, owner, path: 'package.json', ref: sha, headers: {"Accept": "application/vnd.github.v3.raw"}});
+            //console.log(pkg);
+            console.log(context);
