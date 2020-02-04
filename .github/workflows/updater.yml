@@ -25,6 +25,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
           script: |
+            console.log(__dirname);
             let pkg = require("package.json");
             pkg.custom_zip_url = context.payload.release.zipball_url;
             require("fs").writeFileSync("package.json", JSON.stringify(pkg, null, 2));
