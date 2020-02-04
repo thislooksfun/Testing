@@ -40,11 +40,10 @@ jobs:
           git log
 
       - name: Commit Changes
-        uses: github-actions-x/commit@v2.3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          files: package.json
-          commit-message: 'Update .zip URL to version ${{ steps.get_tag.outputs.result }}'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Update .zip URL to version ${{ steps.get_tag.outputs.result }}" package.json
 
       - name: wtf.pt2
         run: |
