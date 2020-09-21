@@ -1,0 +1,23 @@
+name: Matrix Reloaded
+
+on: push
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        versions:
+          - xcode: 11.7
+            ios: 13.7
+          - xcode: 12
+            ios: 14.0
+    steps:
+      - name: Mr. Anderson
+        run: |
+          echo "1: ${{matrix}}"
+          echo "2: ${{matrix.versions}}"
+          echo "3: ${{matrix.versions.xcode}}"
+          echo "4: ${{matrix.versions.ios}}"
+          echo "5: ${{matrix.versions['xcode']}}"
+          echo "6: ${{matrix.versions['ios']}}"
