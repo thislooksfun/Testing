@@ -9,6 +9,27 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ github.ref }}"
-      - run: echo "${{ github.event_name }}"
-      - run: echo "${{ github }}"
+      - name: Dump GitHub context
+        run: echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+      - name: Dump job context
+        run: echo "$JOB_CONTEXT"
+        env:
+          JOB_CONTEXT: ${{ toJSON(job) }}
+      - name: Dump steps context
+        run: echo "$STEPS_CONTEXT"
+        env:
+          STEPS_CONTEXT: ${{ toJSON(steps) }}
+      - name: Dump runner context
+        run: echo "$RUNNER_CONTEXT"
+        env:
+          RUNNER_CONTEXT: ${{ toJSON(runner) }}
+      - name: Dump strategy context
+        run: echo "$STRATEGY_CONTEXT"
+        env:
+          STRATEGY_CONTEXT: ${{ toJSON(strategy) }}
+      - name: Dump matrix context
+        run: echo "$MATRIX_CONTEXT"
+        env:
+          MATRIX_CONTEXT: ${{ toJSON(matrix) }}
