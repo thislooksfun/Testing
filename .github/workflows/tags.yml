@@ -1,0 +1,14 @@
+name: Tags!
+
+on:
+  push:
+    branches: [master]
+    tags: ["*"]
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.ref }}"
+      - run: echo "${{ github.event_name }}"
+      - run: echo "${{ github }}"
