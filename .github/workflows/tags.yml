@@ -3,7 +3,9 @@ name: Tags!
 on:
   push:
     branches: [master]
-    tags: ["*"]
+    tags: ['*']
+  release:
+    types: [published]
 
 jobs:
   run:
