@@ -16,7 +16,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - id: version-docs
+      - uses: actions/github-script@v3
+        with:
+          result-encoding: string
+          script: |
+            const fs = require("fs");
+            fs.mkdirSync("docs");
+            fs.writeFileSync("docs/index.md", "# Hello!\n\nThis is a simple test.");
+            fs.writeFileSync("docs/about.md", "# About\n\n...why are you reading this?");
+      - id: version
         uses: actions/github-script@v3
         with:
           result-encoding: string
@@ -33,15 +41,14 @@ jobs:
                 console.log(`Got unexpected event '${evnt}'`);
                 process.exit(1);
             }
-      - run: "echo new dir: '<gh-pages>/docs/${{ steps.version-docs.outputs.result }}'"
-
-      # - name: Deploy docs
-      #   uses: JamesIves/github-pages-deploy-action@4.0.0
-      #   with:
-      #     branch: gh-pages
-      #     folder: docs
-      #     clean: true
-      #     target-folder: ${{ steps.version-docs.outputs.result }}
+      - run: "echo new dir: '<gh-pages>/docs/${{ steps.version.outputs.result }}'"
+      - name: Deploy docs
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with:
+          branch: gh-pages
+          folder: docs
+          target-folder: docs/${{ steps.version.outputs.result }}
+          clean: true
 
   # symlink:
   #   name: Update symlinks
