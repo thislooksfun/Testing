@@ -62,20 +62,7 @@ jobs:
           node-version: 14.x
       - run: cd scripts && npm ci
       - run: node scripts/update_symlinks.js
-      - run: git status
-      # - uses: actions/github-script@v3
-  #       with:
-  #         script: |
-  #           const fs = require("fs");
-  #           const path = require("path");
-  #           const semParse = require("semver/functions/parse");
-
-  #           console.dir(semParse("1.4.2-dev.5"));
-
-  #           const docRoot = `${process.env.GITHUB_WORKSPACE}/docs`;
-  #           const dir = fs.readdirSync(docRoot);
-
-  #           for (const name of dir) {
-  #             console.log(`> ${name}`);
-  #           }
-  #     # TODO: Commit and push the new symlinks
+      - run: |
+          git add docs
+          git commit -m "Update version links"
+          git push
