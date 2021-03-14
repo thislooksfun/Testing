@@ -66,6 +66,11 @@ jobs:
       - run: node scripts/update_symlinks.js
       - name: Commit and push
         run: |
+          if [ -z "$(git status --porcelain docs)" ]; then
+            echo "Nothing to commit, exiting early!"
+            exit 0
+          fi
+
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add docs
