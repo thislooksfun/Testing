@@ -43,8 +43,10 @@ console.log("Found versions:");
 console.log(JSON.stringify(versions, null, 2));
 
 function ln(from, to) {
-  if (!isSL(to)) return;
-  if (fs.existsSync(to)) fs.unlinkSync(to);
+  if (fs.existsSync(to)) {
+    if (!isSL(to)) return;
+    fs.unlinkSync(to);
+  }
   console.log(`Linking: ${to} -> ${from}`);
   fs.symlinkSync(from, to);
 }
