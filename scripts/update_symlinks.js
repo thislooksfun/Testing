@@ -61,10 +61,10 @@ for (const key of keys) {
 
 // Update version links.
 console.log("Updating version links in index.html...");
-let index = fs.readFileSync("../index.html", { encoding: "utf-8" });
+let index = fs.readFileSync("./index.html", { encoding: "utf-8" });
 index = index.replace(
   /<!-- START:VERSIONS -->[\s\S]*?<!-- END:VERSIONS -->/,
   `<!-- START:VERSIONS -->${versionLinks}\n<!-- END:VERSIONS -->`
 );
-fs.writeFileSync("../index.html", index);
+fs.writeFileSync("./index.html", index);
 console.log("index.html updated successfully!");
