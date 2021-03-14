@@ -56,7 +56,7 @@ let keys = Object.keys(versions).sort(cmpKeys);
 
 for (const key of keys) {
   ln(versions[key], key);
-  versionLinks += `\n<li><a href="docs/${key}">${key}</a></li>`;
+  versionLinks += `\n<li><a href="${key}">${key}</a></li>`;
 }
 
 // Update version links.
