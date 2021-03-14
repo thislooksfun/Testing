@@ -32,7 +32,7 @@ jobs:
                 console.log(`Got unexpected event '${evnt}'`);
                 process.exit(1);
             }
-      - run: "echo new dir: <gh-pages>/docs/'${{ steps.version-docs.outputs.result }}'"
+      - run: "echo new dir: '<gh-pages>/docs/${{ steps.version-docs.outputs.result }}'"
 
       # - name: Deploy docs
       #   uses: JamesIves/github-pages-deploy-action@4.0.0
