@@ -47,6 +47,8 @@ jobs:
           folder: docs
           commit-message: Deploying docs for ${{ steps.version.outputs.result }}
           target-folder: docs/${{ steps.version.outputs.result }}
+          git-config-name: github-actions[bot]
+          git-config-email: 41898282+github-actions[bot]@users.noreply.github.com
           clean: true
 
   symlink:
@@ -63,6 +65,8 @@ jobs:
       - run: cd scripts && npm ci
       - run: node scripts/update_symlinks.js
       - run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add docs
           git commit -m "Update version links"
           git push
