@@ -20,6 +20,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
+            console.dir(context);
             console.dir(github);
             return "hello";
       - run: echo '${{ steps.version-docs.outputs.result }}'
