@@ -19,6 +19,7 @@ jobs:
       - id: version-docs
         uses: actions/github-script@v3
         with:
+          result-encoding: string
           script: |
             switch (context.eventName) {
               case "push":
