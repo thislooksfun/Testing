@@ -3,7 +3,7 @@ const path = require("path");
 const semver = require("semver");
 const { cmpKeys, compare } = require("./cmpVer");
 
-const docRoot = path.join(__dirname, "../docs");
+const docRoot = path.join(__dirname, "../../docs");
 process.chdir(docRoot);
 console.log(`Moved to ${docRoot}`);
 
