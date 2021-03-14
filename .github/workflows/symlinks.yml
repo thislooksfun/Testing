@@ -62,8 +62,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14.x
-      - run: cd scripts && npm ci
-      - run: node scripts/update_symlinks.js
+      - run: cd .meta/scripts && npm ci
+      - run: node .meta/scripts/update_symlinks.js
       - name: Commit and push
         run: |
           if [ -z "$(git status --porcelain docs)" ]; then
