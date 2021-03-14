@@ -5,6 +5,7 @@ const { cmpKeys, compare } = require("./cmpVer");
 
 const docRoot = path.join(__dirname, "../docs");
 process.chdir(docRoot);
+console.log(`Moved to ${docRoot}`);
 
 const versions = {};
 function updateVersion(key, nv) {
@@ -19,6 +20,7 @@ function isSL(pth) {
 }
 
 for (const name of fs.readdirSync(docRoot)) {
+  console.log(`Checking file ${docRoot}/${name}`);
   if (!semver.valid(name)) continue;
   if (isSL(name)) continue;
 
@@ -36,6 +38,9 @@ for (const name of fs.readdirSync(docRoot)) {
     updateVersion("stable", name);
   }
 }
+
+console.log("Found versions:");
+console.log(JSON.stringify(versions, null, 2));
 
 function ln(from, to) {
   if (!isSL(to)) return;
