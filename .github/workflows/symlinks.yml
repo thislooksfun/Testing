@@ -1,0 +1,47 @@
+name: Publish Documentation
+
+on:
+  push:
+    branches: [master]
+  # TODO: Implement versioned docs.
+  # BODY: The other commented sections need to be resolved at the same time as
+  # BODY: this in order to implement this properly.
+  # BODY: This is pending JamesIves/github-pages-deploy-action#635.
+  # release:
+  #   types: [published]
+
+jobs:
+  deploydoc:
+    name: Deploy documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - id: version-docs
+        uses: actions/github-script@v3
+        with:
+          script: |
+            console.dir(github);
+            return "hello";
+      - run: echo '${{ steps.version-docs.outputs.result }}'
+
+      # - name: Deploy docs
+      #   uses: JamesIves/github-pages-deploy-action@4.0.0
+      #   with:
+      #     branch: gh-pages
+      #     folder: docs
+      #     clean: true
+      #     target-folder: ${{ steps.version-docs.outputs.result }}
+
+  # symlink:
+  #   name: Update symlinks
+  #   runs-on: ubuntu-latest
+  #   needs: [deploydoc]
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         ref: gh-pages
+  #     - uses: actions/github-script@v3
+  #       with:
+  #         # TODO: script to update the symlinks goes here
+  #         script: ""
+  #     # TODO: Commit and push the new symlinks
