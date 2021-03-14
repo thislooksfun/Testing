@@ -20,10 +20,19 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
-            console.dir(context);
-            console.dir(github);
-            return "hello";
-      - run: echo '${{ steps.version-docs.outputs.result }}'
+            switch (context.eventName) {
+              case "push":
+                return "master";
+              case "release":
+                const pkgPth = `${process.env.GITHUB_WORKSPACE}/package.json`;
+                const { version } = require(pkgPth);
+                return `v${version}`;
+              default:
+                console.log("Something went very wrong :(");
+                console.log(`Got unexpected event '${evnt}'`);
+                process.exit(1);
+            }
+      - run: "echo new dir: <gh-pages>/docs/'${{ steps.version-docs.outputs.result }}'"
 
       # - name: Deploy docs
       #   uses: JamesIves/github-pages-deploy-action@4.0.0
