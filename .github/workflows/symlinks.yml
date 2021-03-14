@@ -22,8 +22,7 @@ jobs:
           script: |
             const fs = require("fs");
             fs.mkdirSync("docs");
-            fs.writeFileSync("docs/index2.md", "# Hello!\n\nThis is a simple test.");
-            fs.writeFileSync("docs/about2.md", "# About\n\n...why are you reading this?");
+            fs.writeFileSync("docs/index.md", "# Hello!\n\nThis is a simple test.");
       - id: version
         uses: actions/github-script@v3
         with:
