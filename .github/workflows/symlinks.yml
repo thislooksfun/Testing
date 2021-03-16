@@ -14,7 +14,6 @@ jobs:
   deploydoc:
     name: Deploy documentation
     runs-on: ubuntu-latest
-    environment: testenv
     steps:
       - uses: actions/checkout@v2
       - uses: actions/github-script@v3
