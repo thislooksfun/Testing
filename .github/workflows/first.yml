@@ -1,0 +1,21 @@
+name: First Action
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  first:
+    name: First
+    runs-on: ubuntu-latest
+    outputs:
+      ofoo: ${{ steps.out.outputs.foo }}
+      obar: ${{ steps.out.outputs.bar }}
+      xbaz: ${{ steps.x.outputs.baz }}
+    steps:
+      - run: echo "Hello"
+      - id: out
+        run: echo "::set-output name=foo::bar"
+      - id: x
+        if: "false"
+        run: echo "::set-output name=baz::oh"
