@@ -1,19 +1,28 @@
 name: Sanity check
-on: [pull_request]
+on: [push]
 
 jobs:
   commits_check_job:
     runs-on: ubuntu-latest
     name: Commits Check
     steps:
-      - name: Get abbreviated PR Commits
-        id: "get-pr-commits"
-        uses: tim-actions/get-pr-commits@master
+      - name: Lint PR commits
+        uses: actions/github-script@5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          # This only keeps the following structure for each commit:
-          # { "sha": "<sha>", "commit": {"message": "<commit message>" } }
-          # All other information is discarded.
-          keep_keypaths: '[["sha"], ["commit", "message"]]'
-      - run: >
-          echo 'Commits: "${{ steps.get-pr-commits.commits }}"'
+          script: |
+            // const { repository, pull_request } = github.context.payload;
+            const repository = { owner: { login: "serenityOS" }, name: "serenity" };
+            const pull_request = { number: 10642 };
+
+            // NOTE: This maxes out at 250 commits. If this becomes a problem, see:
+            // https://octokit.github.io/rest.js/v18#pulls-list-commits
+            const { data: commits } = await octokit.pulls.listCommits({
+              owner: repository.owner.login,
+              repo: repository.name,
+              pull_number: pull_request.number,
+            });
+
+            console.log(`Got ${commits.length} commits`);
+            for (const { sha, commit: { message } } of commits) {
+              console.log(`${sha}: '${message}');
+            }
