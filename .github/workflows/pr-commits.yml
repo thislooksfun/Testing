@@ -15,4 +15,5 @@ jobs:
           # { "sha": "<sha>", "commit": {"message": "<commit message>" } }
           # All other information is discarded.
           keep_keypaths: '[["sha"], ["commit", "message"]]'
-      - run: "echo 'Commits: ""${{ steps.get-pr-commits.commits }}""'"
+      - run: >
+          echo 'Commits: "${{ steps.get-pr-commits.commits }}"'
