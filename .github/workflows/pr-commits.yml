@@ -24,5 +24,5 @@ jobs:
 
             console.log(`Got ${commits.length} commits`);
             for (const { sha, commit: { message } } of commits) {
-              console.log(`${sha}: '${message}');
+              console.log(`${sha}: '${message}'`);
             }
