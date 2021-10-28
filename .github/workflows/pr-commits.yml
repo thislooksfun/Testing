@@ -10,6 +10,33 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
+            const rules = [
+              {
+                pattern: /^[^\r]*$/,
+                error: "Commit message contains CRLF line breaks (only unix-style LF linebreaks are allowed)",
+              },
+              {
+                pattern: /^.{0,72}(?:\n(?:(.{0,72})|(.*?([a-z]+:\/\/)?(([a-zA-Z0-9_]|-)+\.)+[a-z]{2,}(:\d+)?([a-zA-Z_0-9@:%\+.~\?&/=]|-)+).*?))*$/,
+                error: "Commit message lines are too long (maximum allowed is 72 characters, except for URLs)",
+              },
+              {
+                pattern: /^\S.*?\S: .+/,
+                error: "Missing category in commit title (if this is a fix up of a previous commit, it should be squashed)",
+              },
+              {
+                pattern: /^\S.*?: [A-Z0-9]/,
+                error: "First word of commit after the subsystem is not capitalized",
+              },
+              {
+                pattern: /^.+[^.\n](\n.*)*$/,
+                error: "Commit title ends in a period",
+              },
+              {
+                pattern: /^((?!Signed-off-by: )[\s\S])*$/,
+                error: "Commit body contains a Signed-off-by tag",
+              },
+            ];
+
             // const { repository, pull_request } = context.payload;
             const repository = { owner: { login: "serenityOS" }, name: "serenity" };
             const pull_request = { number: 10642 };
@@ -23,7 +50,15 @@ jobs:
             });
             const commits = await github.paginate(opts);
 
-            console.log(`Got ${commits.length} commits`);
+            const errors = [];
             for (const { sha, commit: { message } } of commits) {
-              console.log(`${sha}: '${message}'`);
+              for (const { pattern, error } of rules) {
+                if (pattern.test(message)) {
+                  errors.push(`  ${sha}    ${error}`)
+                }
+              }
+            }
+
+            if (errors.length > 0) {
+              core.setFailed(`\n\n${errors.join("\n")}\n\n`);
             }
