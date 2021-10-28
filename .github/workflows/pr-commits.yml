@@ -16,11 +16,12 @@ jobs:
 
             // NOTE: This maxes out at 250 commits. If this becomes a problem, see:
             // https://octokit.github.io/rest.js/v18#pulls-list-commits
-            const { data: commits } = await github.rest.pulls.listCommits({
+            const opts = github.rest.pulls.listCommits.endpoint.merge({
               owner: repository.owner.login,
               repo: repository.name,
               pull_number: pull_request.number,
             });
+            const { data: commits } = await github.paginate(opts)
 
             console.log(`Got ${commits.length} commits`);
             for (const { sha, commit: { message } } of commits) {
