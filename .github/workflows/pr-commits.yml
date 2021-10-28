@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Get abbreviated PR Commits
         id: "get-pr-commits"
-        uses: thislooksfun/get-pr-commits@318748b4db0f06d9a9a2047b1e10c67624353c82
+        uses: thislooksfun/get-pr-commits@91363968c692a4425962394cda60f33a2961c997
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           # This only keeps the following structure for each commit:
