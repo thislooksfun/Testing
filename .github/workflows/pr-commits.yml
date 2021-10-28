@@ -16,4 +16,4 @@ jobs:
           # All other information is discarded.
           keep_keypaths: '[["sha"], ["commit", "message"]]'
       - run: >
-          echo 'Commits: "${{ steps.get-pr-commits.commits }}"'
+          echo 'Commits: "${{ steps.get-pr-commits.outputs.commits }}"'
