@@ -21,7 +21,7 @@ jobs:
               repo: repository.name,
               pull_number: pull_request.number,
             });
-            const { data: commits } = await github.paginate(opts)
+            const commits = await github.paginate(opts);
 
             console.log(`Got ${commits.length} commits`);
             for (const { sha, commit: { message } } of commits) {
