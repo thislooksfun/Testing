@@ -52,11 +52,15 @@ jobs:
 
             const errors = [];
             for (const { sha, commit: { message } } of commits) {
+              const commitErrors = [];
               for (const { pattern, error } of rules) {
                 if (pattern.test(message)) {
-                  const title = message.split("\n")[0];
-                  errors.push(`  ${sha} (${title}): ${error}`)
+                  errors.push(error)
                 }
+              }
+              if (commitErrors.length > 0) {
+                const title = message.split("\n")[0];
+                errors.push([`  ${title} (${sha}):`, ...commitErrors].join("\n    "));
               }
             }
 
