@@ -10,13 +10,13 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            // const { repository, pull_request } = github.context.payload;
+            // const { repository, pull_request } = context.payload;
             const repository = { owner: { login: "serenityOS" }, name: "serenity" };
             const pull_request = { number: 10642 };
 
             // NOTE: This maxes out at 250 commits. If this becomes a problem, see:
             // https://octokit.github.io/rest.js/v18#pulls-list-commits
-            const { data: commits } = await github.pulls.listCommits({
+            const { data: commits } = await github.rest.pulls.listCommits({
               owner: repository.owner.login,
               repo: repository.name,
               pull_number: pull_request.number,
