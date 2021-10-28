@@ -1,5 +1,5 @@
 name: Sanity check
-on: [push]
+on: [pull_request]
 
 jobs:
   commits_check_job:
@@ -37,9 +37,7 @@ jobs:
               },
             ];
 
-            // const { repository, pull_request } = context.payload;
-            const repository = { owner: { login: "serenityOS" }, name: "serenity" };
-            const pull_request = { number: 10642 };
+            const { repository, pull_request } = context.payload;
 
             // NOTE: This maxes out at 250 commits. If this becomes a problem, see:
             // https://octokit.github.io/rest.js/v18#pulls-list-commits
@@ -54,13 +52,13 @@ jobs:
             for (const { sha, commit: { message } } of commits) {
               const commitErrors = [];
               for (const { pattern, error } of rules) {
-                if (pattern.test(message)) {
+                if (!pattern.test(message)) {
                   commitErrors.push(error);
                 }
               }
               if (commitErrors.length > 0) {
                 const title = message.split("\n")[0];
-                errors.push([`  ${title} (${sha}):`, ...commitErrors].join("\n    "));
+                errors.push([`${title} (${sha}):`, ...commitErrors].join("\n  "));
               }
             }
 
