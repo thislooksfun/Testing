@@ -55,7 +55,7 @@ jobs:
               const commitErrors = [];
               for (const { pattern, error } of rules) {
                 if (pattern.test(message)) {
-                  errors.push(error)
+                  commitErrors.push(error);
                 }
               }
               if (commitErrors.length > 0) {
