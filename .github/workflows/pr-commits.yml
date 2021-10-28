@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Get abbreviated PR Commits
         id: "get-pr-commits"
-        uses: tim-actions/get-pr-commits@master
+        uses: thislooksfun/get-pr-commits@4dddd32f36d0baafbaecc6c1317e4f8942c11570
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           # This only keeps the following structure for each commit:
@@ -16,4 +16,4 @@ jobs:
           # All other information is discarded.
           keep_keypaths: '[["sha"], ["commit", "message"]]'
       - run: >
-          echo 'Commits: "${{ steps.get-pr-commits.commits }}"'
+          echo 'Commits: "${{ steps.get-pr-commits.outputs.commits }}"'
