@@ -14,7 +14,7 @@ body:
     attributes:
       label: Reproduction steps
       description: How can we reproduce this?
-      placeholder: >
+      placeholder: |
         1. Go to '...'
         2. Click on '....'
         3. Scroll down to '....'
@@ -54,16 +54,6 @@ body:
       label: Node Version
       description: What version of node are you using?
       placeholder: v16
-    validations:
-      required: true
-
-  - type: textarea
-    id: versions
-    attributes:
-      label: Versions
-      description: What version are you using?
-      placeholder: >
-        - snoots version:
     validations:
       required: true
 
