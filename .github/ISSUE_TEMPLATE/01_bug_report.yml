@@ -1,6 +1,6 @@
 name: Bug Report
 description: File a bug report
-labels: ["bug"]
+labels: [bug]
 body:
   - type: textarea
     attributes:
@@ -14,6 +14,8 @@ body:
     attributes:
       label: Reproduction steps
       description: How can we reproduce this?
+      # Multiline placeholders are broken in Safari.
+      # https://github.com/github/feedback/discussions/4290
       placeholder: |
         1. Go to '...'
         2. Click on '....'
@@ -50,9 +52,9 @@ body:
 
   - type: input
     attributes:
-      # TODO: Rename this to "platform version"
+      # TODO: Rename this to "platform version" once we support browsers.
       label: Node Version
-      description: What version of node are you using?
+      description: What version of Node are you using?
       placeholder: v16
     validations:
       required: true
