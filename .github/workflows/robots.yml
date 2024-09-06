@@ -12,6 +12,8 @@ jobs:
   robots:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Update robots.txt
         uses: ./.github/actions/template.yml
         with:
