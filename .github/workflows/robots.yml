@@ -13,9 +13,7 @@ jobs:
   robots:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
       - name: Update robots.txt
-        uses: ./.github/actions/foo
+        uses: thislooksfun/anti-ai-robots@v1
         with:
-          path: docs/robots.txt
+          branch: gh-pages
