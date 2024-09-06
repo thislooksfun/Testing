@@ -1,8 +1,6 @@
 name: Update robots.txt
 
 on:
-  schedule:
-    - cron: "* * * * *"
   workflow_dispatch:
 
 permissions:
