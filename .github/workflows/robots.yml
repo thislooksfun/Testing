@@ -13,6 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update robots.txt
-        uses: thislooksfun/anti-ai-robots@v1
+        uses: ./.github/actions/template.yml
         with:
           path: docs/robots.txt
